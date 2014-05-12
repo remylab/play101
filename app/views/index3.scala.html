@@ -1,0 +1,32 @@
+@(member: Member3)
+@import layouts._
+
+@head = {
+}
+
+@main3("Play 101 - Part 3")(head) {
+
+    @if(flash.contains("registrationSuccess")) {
+        *** 1st visit ***
+    }
+    @if(member != null ) {
+        Hello connected member : @member.username
+        / <a href="@routes.Membership3.logout()" >Logout</a>
+    } else {
+        <a href="@routes.Membership3.register()" >Register</a>
+        
+        @helper.form(routes.Membership3.login) {            
+            @if(flash.contains("errorLogin")) {
+                <p>Invalid username or password</p>
+            }
+            @if(request.queryString.containsKey("redirect")){
+                <p>Please login to continue to : @request.queryString.get("redirect")</p>
+                <input type="hidden" name="redirect" value="@request.queryString.get("redirect")">
+            }
+            <input type="email" name="email" placeholder="Email" value="">
+            <input type="password" name="password" placeholder="Password">
+            
+            <button type="submit">Login</button>
+        }
+    }
+}

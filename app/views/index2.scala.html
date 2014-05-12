@@ -1,0 +1,33 @@
+@(message: String)
+@import layouts._
+
+@head = {
+<script type="text/javascript">
+$(function(){
+
+    $("#ajaxTest").bind('click',function() {
+        jsRoutes.controllers.Application2.ajaxTest().ajax({
+            context: this,
+            data:{
+                name:$('#message').val()
+            },
+            dataType: 'json',
+            success:function(data, textStatus, jqXHR) {
+                $("#ajaxResponse").html("<p>status: "+data.status + " , message: " + data.message + "</p>");
+            },
+            error:function() {
+            	$("#ajaxResponse").html("<p>Oups... server side error !</p>");
+            }
+        });
+    });
+ 
+})
+</script>
+}
+
+@main2("Play 101 - Part2")(head) {
+    <p>@message</p>
+    
+    <p>Message :<input type="text" id="message"></input></p>
+    <p><button id="ajaxTest">Ajax test!</button><div id="ajaxResponse"></div></p>
+}
