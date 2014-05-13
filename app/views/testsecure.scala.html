@@ -1,6 +1,8 @@
 @(member: Member3)
 @import layouts._
+@head = {
+}
 
-@main("TestSecure | Play 101 - Part3") {
+@main3("TestSecure | Play 101 - Part3")(head) {
     <p>Hey @member.username, this a secure page !</p>
 }

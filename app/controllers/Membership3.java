@@ -6,12 +6,18 @@ import java.net.URLEncoder;
 import javax.persistence.PersistenceException;
 
 import models.Member3;
+import models.Member3Todo;
 
 import org.apache.commons.lang3.StringUtils;
 
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
+
+import com.avaje.ebean.Ebean;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class Membership3 extends Controller {
 
@@ -44,10 +50,10 @@ public class Membership3 extends Controller {
                 form.reject("email", "email cannot be null");
             }
             if (StringUtils.isEmpty(form.get().username)) {
-                form.reject("email", "username cannot be null");
+                form.reject("username", "username cannot be null");
             }
             if (StringUtils.isEmpty(form.get().password)) {
-                form.reject("email", "password cannot be null");
+                form.reject("password", "password cannot be null");
             }
         }
 
@@ -92,12 +98,50 @@ public class Membership3 extends Controller {
 
     }
 
+    @Security.Authenticated(Secured.class)
+    public static Result profile() {
+        Member3 member = Membership3.getUser();
+        return ok(views.html.profile3.render(member));
+    }
+
+    @Security.Authenticated(AjaxSecured.class)
+    public static Result addTodo(String todo) {
+        Member3 member = Membership3.getUser();
+
+        ObjectNode jsonResponse = Json.newObject();
+
+        if (!StringUtils.isEmpty(todo)) {
+            try {
+                Member3Todo memberTodo = Member3.addTodo(member, todo);
+                jsonResponse.put("id", memberTodo.id);
+                return ok(jsonResponse);
+            } catch (PersistenceException e) {
+                return internalServerError("DB error");
+            }
+        }
+
+        return badRequest("parameter missing");
+    }
+
+    @Security.Authenticated(AjaxSecured.class)
+    public static Result removeTodo(Long todoId) {
+        Member3 member = Membership3.getUser();
+
+        try {
+            Member3.removeTodo(member, todoId);
+            return ok("done");
+        } catch (PersistenceException e) {
+            return internalServerError("DB error");
+        }
+
+    }
+
     public static Result logout() {
         Application3.onLogout();
         return redirect(routes.Application3.index());
     }
 
     public static Member3 getUser() {
-        return (Member3.find.where().eq("email", session("email")).findUnique());
+        return (Ebean.find(Member3.class).where().eq("email", session("email")).findUnique());
     }
 }

@@ -24,7 +24,6 @@ public class Application2 extends Controller {
         jsonResponse.put("status", "OK");
         jsonResponse.put("message", data.get("name"));
 
-        System.out.println("response : " + jsonResponse);
         return ok(jsonResponse);
     }
 

@@ -28,6 +28,11 @@ POST    /login                      controllers.Membership3.login()
 POST    /register                   controllers.Membership3.create()
 GET     /logout                     controllers.Membership3.logout()
 GET     /secure                     controllers.Application3.testSecure()
+GET     /profile                    controllers.Membership3.profile()
+PUT     /profile/todo/:todo         controllers.Membership3.addTodo(todo: String)
+DELETE  /profile/todo/:id           controllers.Membership3.removeTodo(id: Long)
+
+GET     /public/javascript/routes3  controllers.Application3.jsRoutes()
 
 
 
