@@ -1,16 +1,21 @@
 @(member: Member3)
 @import layouts._
 
+
+@import tools._
+@import tags._
+
 @head = {
 }
 
 @main3("Play 101 - Part 3")(head) {
 
+
     @if(flash.contains("registrationSuccess")) {
         *** 1st visit ***
     }
     @if(member != null ) {
-        Hello connected member : @member.username
+        Hello connected member : <a href="@routes.Membership3.profile()" >@member.username</a>
         / <a href="@routes.Membership3.logout()" >Logout</a>
     } else {
         <a href="@routes.Membership3.register()" >Register</a>

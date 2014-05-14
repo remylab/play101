@@ -55,8 +55,6 @@ public class Member3 extends Model {
     public static void removeTodo(Member3 member, Long todoId) {
         Member3Todo todo = Member3Todo.finder.byId(todoId);
         todo.delete();
-        member.saveManyToManyAssociations("todos");
-        member.save();
     }
 
     public static Member3 authenticate(String email, String password) {

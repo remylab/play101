@@ -12,7 +12,7 @@ public class Membership extends Controller {
     public static class RegisterModel {
 
         public String email;
-        public String userName;
+        public String username;
         public String password;
     }
 
