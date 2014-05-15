@@ -13,7 +13,6 @@ public class Application3 extends Controller {
     // @With(MemberAction.class)
     public static Result index() {
         Member3 member = Membership3.getUser();
-
         return ok(views.html.index3.render(member));
     }
 
