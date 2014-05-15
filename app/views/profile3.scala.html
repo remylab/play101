@@ -1,0 +1,63 @@
+@(member: Member3)
+
+@import layouts._
+@import profile._
+
+@head = {
+<script type="text/javascript">
+    $(function(){
+    
+        $("#submitTodo").bind('submit',function(event) {
+        	event.preventDefault();
+        	
+            jsRoutes.controllers.Membership3.addTodo($('#todo').val()).ajax({
+                context: this,
+                success:function(data, textStatus, jqXHR) {
+
+                    $('#result').html("Done !");
+                    $('#allTodos').prepend('<li data-id="'+data.id+'">(New)' + $('#todo').val() + '<button class="delete">x</button></li>');
+                    
+                    
+                	setTimeout(function(){
+                	    $('#result').html("");
+                	},2000)
+                },
+                error:function() {
+                    $('#result').html("Error : " + data);
+                }
+            });
+        });
+        
+        jQuery(document.body).on('click', '#allTodos .delete', function(event) {
+            var todo = $(this).parent();
+            jsRoutes.controllers.Membership3.removeTodo(todo.attr('data-id')).ajax({
+                context: this,
+                success:function(data, textStatus, jqXHR) {
+                    todo.remove();
+                },
+                error:function() {
+                    todo.append(' error...');
+                }
+            });
+        });
+        
+     
+    })
+</script>
+}
+
+@main3("Profile | Play 101 - Part3")(head) {
+    <h3>@member.username's profile page</h3>
+    <form id="submitTodo">
+        <input type="text" id="todo" name="todo" placeholder="Todo" value="">
+        <button type="submit" >add it !</button>
+        <div id="result"></div>
+    </form>
+    
+    
+    <ul id="allTodos">
+        @member.todos.map { todo =>
+            @views.html.profile.todo(todo)
+        }
+    </ul>
+}
