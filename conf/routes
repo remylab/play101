@@ -7,7 +7,7 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 ##################
 ## PART1
 ##################
-GET     /                          controllers.Application.index()
+#GET     /                          controllers.Application.index()
 
 ##################
 ## PART 2
@@ -20,16 +20,16 @@ GET     /                          controllers.Application.index()
 ##################
 ## PART 3
 ##################
-#GET     /                           controllers.Application3.index()
-#GET     /register                   controllers.Membership3.register()
-#POST    /login                      controllers.Membership3.login()
-#POST    /register                   controllers.Membership3.create()
-#GET     /logout                     controllers.Membership3.logout()
-#GET     /secure                     controllers.Application3.testSecure()
-#GET     /profile                    controllers.Membership3.profile()
-#PUT     /profile/todo/:todo         controllers.Membership3.addTodo(todo: String)
-#DELETE  /profile/todo/:id           controllers.Membership3.removeTodo(id: Long)
-#GET     /public/javascript/routes3  controllers.Application3.jsRoutes()
+GET     /                           controllers.Application3.index()
+GET     /register                   controllers.Membership3.register()
+POST    /login                      controllers.Membership3.login()
+POST    /register                   controllers.Membership3.create()
+GET     /logout                     controllers.Membership3.logout()
+GET     /secure                     controllers.Application3.testSecure()
+GET     /profile                    controllers.Membership3.profile()
+PUT     /profile/todo/:todo         controllers.Membership3.addTodo(todo: String)
+DELETE  /profile/todo/:id           controllers.Membership3.removeTodo(id: Long)
+GET     /public/javascript/routes3  controllers.Application3.jsRoutes()
 
 
 
